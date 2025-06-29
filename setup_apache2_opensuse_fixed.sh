@@ -7,8 +7,9 @@
 sudo zypper refresh
 sudo zypper update -y
 
-# Install Apache2 and required packages
-sudo zypper install -y apache2 apache2-utils
+# Install Apache2 and required packages with service
+sudo zypper install -y apache2 apache2-utils apache2-mod_rewrite
+sudo zypper install -y apache2.service
 
 # Stop Apache2 if running
 sudo systemctl stop apache2
@@ -101,9 +102,10 @@ sudo chown -R wwwrun:www /var/log/apache2
 # Test Apache configuration
 sudo apache2ctl configtest
 
-# Enable and start Apache2
-sudo systemctl enable apache2
-sudo systemctl start apache2
+# Enable and start Apache2 service
+sudo systemctl daemon-reload
+sudo systemctl enable apache2.service
+sudo systemctl start apache2.service
 
 # Configure firewall
 sudo firewall-cmd --permanent --add-service=http
@@ -111,7 +113,7 @@ sudo firewall-cmd --permanent --add-port=80/tcp
 sudo firewall-cmd --reload
 
 # Restart Apache2 to ensure all changes are loaded
-sudo systemctl restart apache2
+sudo systemctl restart apache2.service
 
 # Wait for Apache to start
 sleep 5
@@ -119,7 +121,7 @@ sleep 5
 # Verification steps
 echo "=== Verification ==="
 echo "Apache2 status:"
-sudo systemctl status apache2 --no-pager
+sudo systemctl status apache2.service --no-pager
 
 echo ""
 echo "Testing local connections:"
