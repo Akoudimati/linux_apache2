@@ -104,7 +104,7 @@ sudo systemctl restart apache2
 
 sleep 5
 
-echo "ROC Mondriaan sites are ready:"
+
 echo "Link 1: http://locatierocmondriaan.nl"
 echo "Link 2: http://opleidingrocmondriaan.nl"
 
