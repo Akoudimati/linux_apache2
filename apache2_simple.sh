@@ -107,3 +107,6 @@ curl http://opleidingrocmondriaan.nl
 echo "Setup complete! Ready for exam."
 echo "Your server IP is: $IP"
 echo "Add this IP to Windows hosts file for client testing."
+#for windows 
+echo 192.168.1.100 locatierocmondriaan.nl >> C:\Windows\System32\drivers\etc\hosts
+echo 192.168.1.100 opleidingrocmondriaan.nl >> C:\Windows\System32\drivers\etc\hosts
