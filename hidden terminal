@@ -1,0 +1,52 @@
+# zypper install -y apache2
+# systemctl start apache2.service
+# systemctl enable apache2.service
+
+# mkdir -p /srv/www/vhosts/locatierocmondriaan.nl
+# mkdir -p /srv/www/vhosts/opleidingrocmondriaan.nl
+
+# cat > /srv/www/vhosts/locatierocmondriaan.nl/index.html << 'EOF'
+# <html><head><title>Locatie ROC Mondriaan</title></head><body><h1>Locatie ROC Mondriaan</h1></body></html>
+# EOF
+
+# cat > /srv/www/vhosts/opleidingrocmondriaan.nl/index.html << 'EOF'
+# <html><head><title>Opleiding ROC Mondriaan</title></head><body><h1>Opleiding ROC Mondriaan</h1></body></html>
+# EOF
+
+# cat > /etc/apache2/vhosts.d/locatie.conf << 'EOF'
+# <VirtualHost *:80>
+#     ServerName locatierocmondriaan.nl
+#     DocumentRoot /srv/www/vhosts/locatierocmondriaan.nl
+#     <Directory /srv/www/vhosts/locatierocmondriaan.nl>
+#         AllowOverride None
+#         Require all granted
+#     </Directory>
+# </VirtualHost>
+# EOF
+
+# cat > /etc/apache2/vhosts.d/opleiding.conf << 'EOF'
+# <VirtualHost *:80>
+#     ServerName opleidingrocmondriaan.nl
+#     DocumentRoot /srv/www/vhosts/opleidingrocmondriaan.nl
+#     <Directory /srv/www/vhosts/opleidingrocmondriaan.nl>
+#         AllowOverride None
+#         Require all granted
+#     </Directory>
+# </VirtualHost>
+# EOF
+
+# chown -R wwwrun:www /srv/www/vhosts
+# chmod -R 755 /srv/www/vhosts
+# chmod 644 /srv/www/vhosts/*/index.html
+
+# echo "NameVirtualHost *:80" >> /etc/apache2/listen.conf
+
+# apache2ctl configtest
+# systemctl restart apache2.service
+
+# IP=$(hostname -I | awk '{print $1}')
+# echo "$IP locatierocmondriaan.nl" >> /etc/hosts
+# echo "$IP opleidingrocmondriaan.nl" >> /etc/hosts
+
+# curl http://locatierocmondriaan.nl
+# curl http://opleidingrocmondriaan.nl
